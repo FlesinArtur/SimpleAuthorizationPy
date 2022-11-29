@@ -1,6 +1,9 @@
 
+SECURITY = 'security.txt'
+
+
 def file_writing(user_login, user_password):
-    file = open('security.txt', 'w', encoding='utf-8')
+    file = open(SECURITY, 'w', encoding='utf-8')
     file.write(user_login)
     file.write(f'\n{user_password}')
     file.close()
@@ -12,24 +15,22 @@ def registration():
     user_password = input('Введіть пароль, який ви хочете використовувати: ')
 
     while True:
-        while True:
-            repeat_password = input('Повторіть пароль: ')
-            if user_password == repeat_password:
-                print('Успішно!')
-                break
-            print('Ви ввели щось не так!')
-        file_writing(user_login=user_login, user_password=user_password)
-        break
+        repeat_password = input('Повторіть пароль: ')
+        if user_password == repeat_password:
+            print('Успішно!')
+            break
+        print('Ви ввели щось не так!')
+    file_writing(user_login=user_login, user_password=user_password)
 
 
 def authorization():
+    file = open(SECURITY, 'r', encoding='utf-8')
+    ls = file.readlines()
+    ls[0] = ls[0].strip('\n')
 
     while True:
         user_login = input('Введіть свій логін: ')
         user_password = input('Введіть свій пароль: ')
-        file = open('security.txt', 'r', encoding='utf-8')
-        ls = file.readlines()
-        ls[0] = ls[0].strip('\n')
         if ls[0] == user_login and ls[1] == user_password:
             print('Вітаю козаче, ти не забув хто ти!')
             break
