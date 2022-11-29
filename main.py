@@ -1,8 +1,10 @@
 
+import pwinput
 SECURITY = 'security.txt'
 
 
 def file_writing(user_login, user_password):
+
     file = open(SECURITY, 'w', encoding='utf-8')
     file.write(user_login)
     file.write(f'\n{user_password}')
@@ -24,13 +26,14 @@ def registration():
 
 
 def authorization():
+
     file = open(SECURITY, 'r', encoding='utf-8')
     ls = file.readlines()
     ls[0] = ls[0].strip('\n')
 
     while True:
         user_login = input('Введіть свій логін: ')
-        user_password = input('Введіть свій пароль: ')
+        user_password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
         if ls[0] == user_login and ls[1] == user_password:
             print('Вітаю козаче, ти не забув хто ти!')
             break
@@ -41,6 +44,7 @@ def authorization():
 
 
 def main():
+
     while True:
         variant = input('Введіть 1, якщо ви хочете зареєструватись, введіть 2, якщо ви хочете авторизуватись: ')
 
