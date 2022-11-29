@@ -1,2 +1,2 @@
 # SimpleAuthorizationPy
-My sirst Authorization programm
+My first Authorization programm
