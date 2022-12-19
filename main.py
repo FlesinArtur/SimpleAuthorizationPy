@@ -1,6 +1,7 @@
 
+import json
 import pwinput
-SECURITY = 'security.txt'
+SECURITY = 'database.json'
 
 
 def password_validate():
@@ -13,10 +14,12 @@ def password_validate():
 
 
 def file_writing(user_login, user_password):
-
+    database = {
+        "password": user_password,
+        "login": user_login
+    }
     file = open(SECURITY, 'w', encoding='utf-8')
-    file.write(user_login)
-    file.write(f'\n{user_password}')
+    json.dump(database, file)
     file.close()
 
 
@@ -35,13 +38,12 @@ def registration():
 def authorization():
 
     file = open(SECURITY, 'r', encoding='utf-8')
-    ls = file.readlines()
-    ls[0] = ls[0].strip('\n')
+    database = json.load(file)
 
     while True:
         user_login = input('Введіть свій логін: ')
         user_password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
-        if ls[0] == user_login and ls[1] == user_password:
+        if database["login"] == user_login and database["password"] == user_password:
             print('Вітаю козаче, ти не забув хто ти!')
             break
         else:
