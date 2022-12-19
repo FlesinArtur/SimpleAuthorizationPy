@@ -3,6 +3,15 @@ import pwinput
 SECURITY = 'security.txt'
 
 
+def password_validate():
+    while True:
+        user_password = input('Введіть пароль, який ви хочете використовувати: ')
+        if len(user_password) < 5:
+            print('Маленький пароль, легко взламати...')
+        else:
+            return user_password
+
+
 def file_writing(user_login, user_password):
 
     file = open(SECURITY, 'w', encoding='utf-8')
@@ -12,10 +21,8 @@ def file_writing(user_login, user_password):
 
 
 def registration():
-
     user_login = input('Введіть логін, який ви хочете використовувати: ')
-    user_password = input('Введіть пароль, який ви хочете використовувати: ')
-
+    user_password = password_validate()
     while True:
         repeat_password = input('Повторіть пароль: ')
         if user_password == repeat_password:
