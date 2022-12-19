@@ -17,7 +17,12 @@ If you see: "venv\Scripts\activate : File G:Your\pass\venv\Scripts\activate.ps1 
   ## Set-ExecutionPolicy
   ## Unrestricted
 ________________
+
 Then install requirements.txt:
  ## pip install -r requirements.txt
 Run the program:
 in terminal write: "python main.py"
+________________
+
+Command for requirements:
+ ## pip freeze
