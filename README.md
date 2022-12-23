@@ -20,6 +20,7 @@ ________________
 
 Then install requirements.txt:
  ## pip install -r requirements.txt
+<<<<<<< HEAD
 Run the program in terminal:
 ```sh
 python3 main.py
@@ -31,3 +32,11 @@ Command for requirements:
 pip freeze > requirements.txt
 ```
 
+=======
+Run the program:
+in terminal write: "python main.py"
+________________
+
+Command for requirements:
+ ## pip freeze
+>>>>>>> 03401c77d5baa7c9a9223581570356c15b7d9aa6
