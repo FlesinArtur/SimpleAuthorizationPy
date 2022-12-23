@@ -18,7 +18,10 @@ def file_writing(user_login, user_password):
         "password": user_password,
         "login": user_login
     }
-    file = open(SECURITY, 'w', encoding='utf-8')
+    file = open(SECURITY, 'r+', encoding='utf-8')
+    line = file.readline()
+    if line != '':
+        file.write("\n")
     json.dump(database, file)
     file.close()
 
@@ -36,18 +39,27 @@ def registration():
 
 
 def authorization():
-
     file = open(SECURITY, 'r', encoding='utf-8')
-    database = json.load(file)
-
+    temp = False
     while True:
         user_login = input('Введіть свій логін: ')
         user_password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
-        if database["login"] == user_login and database["password"] == user_password:
-            print('Вітаю козаче, ти не забув хто ти!')
-            break
-        else:
+
+        while True:
+            line = file.readline()
+            if not line:
+                break
+            database = json.loads(line)
+            if database["login"] == user_login and database["password"] == user_password:
+                temp = True
+                print('Вітаю козаче, ти не забув хто ти!')
+                break
+            else:
+                temp = False
+        if not temp:
             print('Козаче, схоже ти забув хто ти, повтори спробу:(')
+        else:
+            break
 
     file.close()
 
