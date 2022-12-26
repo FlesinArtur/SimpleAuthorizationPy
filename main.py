@@ -1,7 +1,7 @@
-
-import os.path
+import os
 import json
 import pwinput
+
 SECURITY = 'database.json'
 
 
@@ -14,20 +14,13 @@ def password_validate():
             return user_password
 
 
-def create_storage(user_login, user_password):
+def create_storage():
 
     if not os.path.exists(SECURITY):
         file = open(SECURITY, 'w')
-        database = [{
-            "login": user_login,
-            "password": user_password
-        }]
+        database = []
         json.dump(database, file)
         file.close()
-
-    else:
-        database = get_data_from_storage()
-        add_user(database, user_login, user_password)
 
 
 def get_data_from_storage():
@@ -38,8 +31,8 @@ def get_data_from_storage():
     return database
 
 
-def add_user(database, user_login, user_password):
-
+def create_new_user(user_login, user_password):
+    database = get_data_from_storage()
     database.append({
             "login": user_login,
             "password": user_password
@@ -64,7 +57,7 @@ def registration():
             print('Успішно!')
             break
         print('Ви ввели щось не так!')
-    create_storage(user_login=user_login, user_password=user_password)
+    create_new_user(user_login, user_password)
 
 
 def authorization():
@@ -91,7 +84,7 @@ def authorization():
 
 
 def main():
-
+    create_storage()
     while True:
         variant = input('Введіть 1, якщо ви хочете зареєструватись, введіть 2, якщо ви хочете авторизуватись: ')
 
@@ -106,4 +99,5 @@ def main():
 
 
 if __name__ == "__main__":
+    create_storage()
     main()
