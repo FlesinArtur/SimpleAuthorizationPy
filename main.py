@@ -18,7 +18,7 @@ def create_storage():
 
     if not os.path.exists(SECURITY):
         file = open(SECURITY, 'w')
-        database = []
+        database = {}
         json.dump(database, file)
         file.close()
 
@@ -33,10 +33,7 @@ def get_data_from_storage():
 
 def create_new_user(user_login, user_password):
     database = get_data_from_storage()
-    database.append({
-            "login": user_login,
-            "password": user_password
-        })
+    database.update({user_login: user_password})
     file_writing(database)
 
 
@@ -63,24 +60,19 @@ def registration():
 def authorization():
 
     database = get_data_from_storage()
-    temp = False
 
     while True:
+
         user_login = input('Введіть свій логін: ')
         user_password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
-
-        for user in database:
-
-            if user["login"] == user_login and user["password"] == user_password:
-                temp = True
-                print('Вітаю козаче, ти не забув хто ти!')
-                break
-            else:
-                temp = False
-        if not temp:
-            print('Козаче, схоже ти забув хто ти, повтори спробу:(')
-        else:
+        if database.get(user_login) == user_password:
+            print('Вітаю козаче, ти не забув хто ти!')
             break
+        else:
+            print('Козаче, схоже ти забув хто ти, повтори спробу:(')
+
+
+
 
 
 def main():
