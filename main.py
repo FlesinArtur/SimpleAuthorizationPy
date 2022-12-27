@@ -6,6 +6,7 @@ SECURITY = 'database.json'
 
 
 def password_validate():
+
     while True:
         user_password = input('Введіть пароль, який ви хочете використовувати: ')
         if len(user_password) < 5:
@@ -62,7 +63,6 @@ def authorization():
     database = get_data_from_storage()
 
     while True:
-
         user_login = input('Введіть свій логін: ')
         user_password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
         if database.get(user_login) == user_password:
@@ -72,11 +72,10 @@ def authorization():
             print('Козаче, схоже ти забув хто ти, повтори спробу:(')
 
 
-
-
-
 def main():
+
     create_storage()
+
     while True:
         variant = input('Введіть 1, якщо ви хочете зареєструватись, введіть 2, якщо ви хочете авторизуватись: ')
 
@@ -91,5 +90,4 @@ def main():
 
 
 if __name__ == "__main__":
-    create_storage()
     main()
