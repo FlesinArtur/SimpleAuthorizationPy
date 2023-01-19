@@ -18,18 +18,16 @@ def password_validate():
 def create_storage():
 
     if not os.path.exists(SECURITY):
-        file = open(SECURITY, 'w')
-        database = {}
-        json.dump(database, file)
-        file.close()
+        with open(SECURITY, 'w') as file:
+            database = {}
+            json.dump(database, file)
 
 
 def get_data_from_storage():
 
-    file = open(SECURITY, 'r')
-    database = json.load(file)
-    file.close()
-    return database
+    with open(SECURITY, 'r') as file:
+        database = json.load(file)
+        return database
 
 
 def create_new_user(user_login, user_password):
@@ -40,9 +38,8 @@ def create_new_user(user_login, user_password):
 
 def file_writing(database):
 
-    file = open(SECURITY, 'w')
-    json.dump(database, file)
-    file.close()
+    with open(SECURITY, 'w') as file:
+        json.dump(database, file)
 
 
 def registration():
