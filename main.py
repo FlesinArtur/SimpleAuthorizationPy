@@ -1,8 +1,10 @@
 import os
 import json
 import pwinput
+import hashlib
 
 SECURITY = 'database.json'
+SALT = b'mystaticsalt'
 
 
 def password_validate():
@@ -13,6 +15,14 @@ def password_validate():
             print('Маленький пароль, легко взламати...')
         else:
             return user_password
+
+
+def hash_password(password):
+    key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), SALT, 10000)
+    key = key.hex()
+    print(key)
+    print(type(key))
+    return key
 
 
 def create_storage():
@@ -49,6 +59,7 @@ def registration():
     while True:
         repeat_password = input('Повторіть пароль: ')
         if user_password == repeat_password:
+            user_password = hash_password(user_password)
             print('Успішно!')
             break
         print('Ви ввели щось не так!')
@@ -62,6 +73,7 @@ def authorization():
     while True:
         user_login = input('Введіть свій логін: ')
         user_password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
+        user_password = hash_password(user_password)
         if database.get(user_login) == user_password:
             print('Вітаю козаче, ти не забув хто ти!')
             break
