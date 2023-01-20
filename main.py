@@ -10,18 +10,16 @@ SALT = b'mystaticsalt'
 def password_validate():
 
     while True:
-        user_password = input('Введіть пароль, який ви хочете використовувати: ')
-        if len(user_password) < 5:
+        password = input('Введіть пароль, який ви хочете використовувати: ')
+        if len(password) < 5:
             print('Маленький пароль, легко взламати...')
         else:
-            return user_password
+            return password
 
 
 def hash_password(password):
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), SALT, 10000)
     key = key.hex()
-    print(key)
-    print(type(key))
     return key
 
 
@@ -40,9 +38,9 @@ def get_data_from_storage():
         return database
 
 
-def create_new_user(user_login, user_password):
+def create_new_user(login, password):
     database = get_data_from_storage()
-    database.update({user_login: user_password})
+    database.update({login: password})
     file_writing(database)
 
 
@@ -54,16 +52,16 @@ def file_writing(database):
 
 def registration():
 
-    user_login = input('Введіть логін, який ви хочете використовувати: ')
-    user_password = password_validate()
+    login = input('Введіть логін, який ви хочете використовувати: ')
+    password = password_validate()
     while True:
         repeat_password = input('Повторіть пароль: ')
-        if user_password == repeat_password:
-            user_password = hash_password(user_password)
+        if password == repeat_password:
+            password = hash_password(password)
             print('Успішно!')
             break
         print('Ви ввели щось не так!')
-    create_new_user(user_login, user_password)
+    create_new_user(login, password)
 
 
 def authorization():
@@ -71,10 +69,10 @@ def authorization():
     database = get_data_from_storage()
 
     while True:
-        user_login = input('Введіть свій логін: ')
-        user_password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
-        user_password = hash_password(user_password)
-        if database.get(user_login) == user_password:
+        login = input('Введіть свій логін: ')
+        password = pwinput.pwinput(prompt='Введіть свій пароль: ', mask='*')
+        password = hash_password(password)
+        if database.get(login) == password:
             print('Вітаю козаче, ти не забув хто ти!')
             break
         else:
