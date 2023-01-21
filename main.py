@@ -3,11 +3,11 @@ import json
 import pwinput
 import hashlib
 
-SECURITY = 'database.json'
-SALT = b'mystaticsalt'
+SECURITY: str = 'database.json'
+SALT: bytes = b'mystaticsalt'
 
 
-def password_validate():
+def password_validate() -> str:
 
     while True:
         password = input('Введіть пароль, який ви хочете використовувати: ')
@@ -17,7 +17,7 @@ def password_validate():
             return password
 
 
-def hash_password(password):
+def hash_password(password: str) -> str:
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), SALT, 10000)
     key = key.hex()
     return key
@@ -31,20 +31,20 @@ def create_storage():
             json.dump(database, file)
 
 
-def get_data_from_storage():
+def get_data_from_storage() -> dict:
 
     with open(SECURITY, 'r') as file:
         database = json.load(file)
         return database
 
 
-def create_new_user(login, password):
+def create_new_user(login: str, password: str):
     database = get_data_from_storage()
     database.update({login: password})
     file_writing(database)
 
 
-def file_writing(database):
+def file_writing(database: dict):
 
     with open(SECURITY, 'w') as file:
         json.dump(database, file)
