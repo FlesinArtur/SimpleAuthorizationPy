@@ -79,6 +79,9 @@ def authorization():
             print('Козаче, схоже ти забув хто ти, повтори спробу:(')
 
 
+def test ():
+    pass
+
 def main():
 
     create_storage()
