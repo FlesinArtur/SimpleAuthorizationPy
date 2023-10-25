@@ -1,3 +1,5 @@
 venv
 database.json
 temp.py
+.idea
+.vs
